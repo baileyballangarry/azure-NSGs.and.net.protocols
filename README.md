@@ -3,7 +3,8 @@
 </p>
 
 <h1>Network Security Groups and Inspecting Traffic Between Azure Virtual Machines</h1>
-This lab aims to aid in our understanding of different types of web protocols and how machines interact with each other over a network. We will observe three different types of traffic in this lab being; ICMP, DHCP, and DNS. <br />
+
+The objective of this lab is to enhance our comprehension of various web protocols and the mechanisms through which machines communicate over a network. In this lab, we will observe and analyze three distinct forms of network traffic, specifically ICMP, DHCP, and DNS.<br />
 
 <h2>Environments and Technologies Used</h2>
 
@@ -47,9 +48,9 @@ This is where we will store our two virtual machines. Go to “Azure -> resource
 <b>2.	Create two Virtual Machines.</b>
   
 <p>
-One should be a windows 10 Virtual Machine, the other should be a Linux virtual machine. When creating these VMs, place them both inside the resource group that we just created. 
+For this setup, you should create two virtual machines - one running Windows 10 and the other running Linux. Ensure that both of these VMs are placed within the resource group we've just established.
 
-The first VM will be called “Windows-VM” and will run “Windows 10 Pro.” Username will be “Labuser” and the password will be “Password1234”
+The first VM, named "Windows-VM," will run "Windows 10 Pro." Set the username as "Labuser," with the password specified as "Password1234."
 </p>
 
 <p>
@@ -59,7 +60,7 @@ The first VM will be called “Windows-VM” and will run “Windows 10 Pro.” 
 <br />
 
 <p>
-The second VM will be called “Linux-VM” and will run “Ubuntu Server 20.04 LTS.” Username will be “Labuser” and the password will be “Password1234” The reason we can use the same username and password on both virtual machines is because they are two separate machines, thus having their own unique IP Address when we connect to them.
+The second virtual machine should be named "Linux-VM" and will operate on "Ubuntu Server 20.04 LTS." The username to access this machine will be "Labuser," and the password will be set as "Password1234." It's worth noting that using the same username and password for both virtual machines is feasible because they are distinct machines, each having its unique IP address when accessed.
 </p>
 
 <p>
@@ -69,7 +70,12 @@ The second VM will be called “Linux-VM” and will run “Ubuntu Server 20.04 
 <br />
 
 <p>
-Note: when we created our first virtual machine, being “Windows-VM” a virtual network was automatically created called “Windows-VM-Net”. With this in mind, when we create the second virtual machine we must go to the networking page and check that the virtual network that was created is selected. 
+Please take note that when we initially set up our first virtual machine, "Windows-VM," an associated virtual network named "Windows-VM-Net" was automatically generated. Therefore, when creating the second virtual machine, it's important to navigate to the networking settings and confirm that the previously created virtual network is selected.
+
+
+
+
+
 </p>
 
 <p>
@@ -81,7 +87,8 @@ Note: when we created our first virtual machine, being “Windows-VM” a virtua
 <p>
 <b>3.	Remote Desktop into the windows virtual machine.</b>
   
-Within Azure, navigate to your windows virtual machine and copy Its public IP address. Open Remote Desktop Connection on your PC and paste the IP address of the windows VM. Log in to the VM using the username and password that we created when initially creating the VM.
+
+In the Azure portal, locate your Windows virtual machine and copy its public IP address. Launch Remote Desktop Connection on your personal computer and paste the IP address of the Windows VM. Sign in to the VM using the username and password established during the initial VM setup.
 </p>
 
 <p>
@@ -93,7 +100,7 @@ Within Azure, navigate to your windows virtual machine and copy Its public IP ad
 <p>
 <b>4.	Download and install Wireshark. </b>
   
-Once you are inside your Windows VM, open a web browser and download the Windows 10 64bit Wireshark installer. Install the software from the file in your downloads folder. Once Wireshark is installed, open the program. Once inside Wireshark, select “Ethernet” and then press the blue shark fin button in the top left of Wireshark. 
+After accessing your Windows VM, use a web browser to obtain the Windows 10 64-bit Wireshark installer. Install the software from the downloaded file located in your downloads folder. Once Wireshark has been successfully installed, launch the program. While inside Wireshark, select "Ethernet," and then click the blue shark fin icon located in the top-left corner of the Wireshark interface.
 </p>
 
 <p>
@@ -105,7 +112,7 @@ Once you are inside your Windows VM, open a web browser and download the Windows
 <p>
   <b>We will use Wireshark to observe ICMP, DHCP, and DNS traffic.</b>
 
-We will now filter for ICMP traffic only. To do this, go to the search bar at the top of Wireshark and search for “ICMP” then press enter. This will make it so that Wireshark only shows us ICMP traffic that is happening over the network, as opposed to all traffic.
+Now, let's set up a filter to display only ICMP traffic. To achieve this, navigate to the search bar located at the top of Wireshark and search for "ICMP," then hit the Enter key. This action will filter Wireshark to display exclusively the ICMP traffic occurring over the network, as opposed to all traffic.
 </p>
 
 <p>
@@ -115,7 +122,7 @@ We will now filter for ICMP traffic only. To do this, go to the search bar at th
 <br />
 
 <p>
-It is important to remember that ICMP stands for “Internet Control Messaging Protocol” which is the protocol that ping uses. When we begin pinging another machine, we will see the ICMP traffic in Wireshark.
+It's crucial to keep in mind that ICMP stands for "Internet Control Messaging Protocol," the protocol used by the "ping" command. When we initiate pinging another machine, we will observe the ICMP traffic within Wireshark.
 </p>
   
 <br />
@@ -123,7 +130,7 @@ It is important to remember that ICMP stands for “Internet Control Messaging P
 <p>
 <b>5.	“Ping” to observe ICMP traffic.</b>
   
-Obtain the private IP address of the linux virtual machine within azure. For this example, the private IP address of the linux virtual machine is “10.0.0.5”.
+Retrieve the private IP address of the Linux virtual machine within Azure. In this illustration, the private IP address of the Linux virtual machine is designated as "10.0.0.5."
 </p>
 
 <p>
@@ -133,9 +140,9 @@ Obtain the private IP address of the linux virtual machine within azure. For thi
 <br />
 
 <p>
-Within the Windows VM, open command prompt and ping the linux VM with the command “ping 10.0.0.5” you should automatically get a reply. If we look at Wireshark, we can see the traffic that we just generated. We see the source IP (Windows VM) the destination IP (Linux VM) the protocol (ICMP) and information (request and reply).
+Inside the Windows VM, launch the command prompt and initiate a ping to the Linux VM by entering the command "ping 10.0.0.5." You should receive an immediate reply. If we examine Wireshark, we can observe the traffic generated. It displays the source IP (Windows VM), destination IP (Linux VM), protocol (ICMP), and relevant information (request and reply).
 
-Note. The IP address of your virtual machine may be different to the IP address I have used in this example. 
+Please be aware that the IP address of your virtual machine may differ from the one used in this example.
 
 </p>
 
@@ -148,7 +155,7 @@ Note. The IP address of your virtual machine may be different to the IP address 
 <p>
 <b>6.	Modify incoming security rules for the Linux VM</b>
   
-Go back to Azure and search for network security groups via the search bar. Open the network security group for the linux virtual machine. Select inbound rules and create a new rule. This rule should be to deny inbound ICMP traffic. Select ICMP, Select Deny, Set the priority to 200, and press Add.
+Return to Azure and utilize the search bar to locate "network security groups." Access the network security group associated with the Linux virtual machine. Then, proceed to the "Inbound rules" section and generate a new rule. This rule should be configured to reject inbound ICMP traffic. Choose ICMP, select "Deny," set the priority to 200, and click "Add."
 </p>
 
 <p>
@@ -158,7 +165,7 @@ Go back to Azure and search for network security groups via the search bar. Open
 <br />
 
 <p>
-Wait several minutes for the rule to update and return to the Windows VM. Ping the Linux VM again using “ping 10.0.0.5” we should see that the ping request to the linux machine will time out. Remembering back to before, this is because “ping” uses ICMP, (Internet control messaging protocol) so by modifying the inbound rules on the network security group of the linux virtual machine and denying inbound ICMP traffic we have effectively denied the ability for other machines to ping the linux machine.
+Wait for several minutes to allow the rule to update, and then go back to the Windows VM. Attempt to ping the Linux VM once more using the command "ping 10.0.0.5." You will notice that the ping request to the Linux machine will time out. As previously mentioned, this occurs because the "ping" command uses ICMP (Internet Control Messaging Protocol). By adjusting the inbound rules in the network security group of the Linux virtual machine and denying inbound ICMP traffic, we have effectively restricted the capability of other machines to ping the Linux machine.
 </p>
 
 <p>
@@ -168,7 +175,8 @@ Wait several minutes for the rule to update and return to the Windows VM. Ping t
 <br />
 
 <p>
-We can revert these changes by returning to Azure and either deleting the rule we just created, or modifying it to allow incoming ICMP traffic.
+
+To reverse these modifications, you can return to Azure and either delete the rule that was recently created or adjust it to permit incoming ICMP traffic.
 </p>
 
 <br />
@@ -176,9 +184,10 @@ We can revert these changes by returning to Azure and either deleting the rule w
 <p>
 <b>7.	“Ipconfig /renew” to Observe DHCP traffic</b>
   
-Return to the Windows VM and open Wireshark. Search for DHCP in the search bar and press enter. 
 
-It is important to remember DHCP stands for “Dynamic Host Configuration Protocol” which is the protocol responsible for issuing IP Addresses to computers. When a computer needs an IP address, it will send a request to the DHCP server, and the DHCP server will respond by issuing an IP address. 
+Head back to the Windows VM and launch Wireshark. In the search bar, search for "DHCP" and hit Enter.
+
+It's worth noting that DHCP stands for "Dynamic Host Configuration Protocol," which is the protocol responsible for assigning IP addresses to computers. When a computer requires an IP address, it sends a request to the DHCP server, and the DHCP server responds by providing an IP address.
 
 We can observe this by typing the command “ipconfig /renew”
 </p>
@@ -192,12 +201,14 @@ We can observe this by typing the command “ipconfig /renew”
 <p>
 <b>8.	“nslookup” to Observe DNS Traffic</b>
   
-Return to the Windows VM and open Wireshark. Search for DNS in the search bar and press enter.
-It is important to remember DNS stands for “Domain Name System” which is the protocol responsible for matching IP addresses to websites.
 
-DNS protocol takes a name such as “www.google.com” and will find the relevant IP address for that website by talking to a range of different servers. 
+Go back to the Windows VM and launch Wireshark. In the search bar, search for "DNS" and hit Enter.
 
-We can observe this by typing the command “nslookup” and a website name such as google, YouTube, or Disney. The full command should look like “nslookup www.google.com”
+It's crucial to recall that DNS stands for "Domain Name System," which is the protocol responsible for mapping IP addresses to websites.
+
+The DNS protocol translates a name, such as "www.google.com," into the corresponding IP address by interacting with various servers.
+
+We can witness this process by using the "nslookup" command with a website name like Google, YouTube, or Disney. The complete command would appear as "nslookup www.google.com."
 </p>
 
 <p>
@@ -209,7 +220,7 @@ We can observe this by typing the command “nslookup” and a website name such
 <p>
 <b>9.	Clean-up Azure</b>
   
-Once you have finished experimenting with different types of web traffic you should return to Azure and delete all the resources we created. Leaving them running will continue to cost money as they will run in the background without you even realising. 
+After you have concluded your exploration of various web traffic types, please revisit Azure and remove all the resources we established. Leaving these resources running can result in ongoing costs, even without your active use.
 
-In this lab, we have worked to understand diverse web protocols and scrutinize their traffic using Wireshark. Furthermore, we have acquired knowledge about how distinct security regulations on network security groups can impact web traffic by granting or denying certain forms of traffic.
+Throughout this lab, we have strived to enhance our comprehension of various web protocols and examine their associated traffic with the aid of Wireshark. Additionally, we have gained insights into how different network security group regulations can influence web traffic by allowing or denying specific types of traffic.
 </p>
